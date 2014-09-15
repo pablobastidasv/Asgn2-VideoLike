@@ -67,7 +67,7 @@ public class OAuth2SecurityConfiguration {
             // Para todos los demas request debe tener permiso "write"
             http.authorizeRequests()
                     .antMatchers("/**")
-                    .access("@oauth2.hasScope('write')");
+                    .access("#oauth2.hasScope('write')");
         }
     }
 
