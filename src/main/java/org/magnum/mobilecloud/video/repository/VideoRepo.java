@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 
 public interface VideoRepo extends CrudRepository<Video, Long>{
+
 }

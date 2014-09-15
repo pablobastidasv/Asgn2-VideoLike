@@ -72,7 +72,7 @@ public class OAuth2SecurityConfiguration {
     }
 
     /**
-     * Esta clase es usada para configurar como nuestro servidor de autorizaciones (el '/oauth/token' endpoin)
+     * Esta clase es usada para configurar como nuestro servidor de autorizaciones (el '/oauth/token' endpoint)
      * valida las credenciales del cliente.
      */
     @Configuration
