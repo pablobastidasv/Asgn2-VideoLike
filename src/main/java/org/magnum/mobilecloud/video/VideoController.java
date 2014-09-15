@@ -29,9 +29,9 @@ public class VideoController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = VideoSvcApi.VIDEO_SVC_PATH)
-    public @ResponseBody Long getVideos(@RequestBody Video video){
+    public @ResponseBody Video getVideos(@RequestBody Video video){
         videoRepo.save(video);
 
-        return video.getId();
+        return video;
     }
 }
