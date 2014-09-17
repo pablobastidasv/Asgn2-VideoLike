@@ -6,12 +6,9 @@ import org.magnum.mobilecloud.video.repository.Video;
 import org.magnum.mobilecloud.video.repository.VideoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -34,4 +31,28 @@ public class VideoController {
 
         return video;
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = VideoSvcApi.VIDEO_SVC_PATH + "/{videoId}")
+    public @ResponseBody Video getVideo(@PathVariable(value = "videoId") long videoId, HttpServletResponse response){
+        Video video = videoRepo.findOne(videoId);
+
+        if(video == null){
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return null;
+        }
+
+        return video;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = VideoSvcApi.VIDEO_SVC_PATH+ "/{id}/like")
+    public @ResponseBody Video likeVideo(@PathVariable(value = "id") long videoId){
+        Video video = videoRepo.findOne(videoId);
+
+        video.setLikes(video.getLikes() + 1);
+
+        videoRepo.save(video);
+
+        return video;
+    }
+
 }
