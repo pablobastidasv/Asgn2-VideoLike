@@ -2,10 +2,9 @@ package org.magnum.mobilecloud.video.repository;
 
 import com.google.common.base.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A simple object to represent a video and its URL for viewing.
@@ -32,6 +31,9 @@ public class Video {
 	private String url;
 	private long duration;
 	private long likes;
+
+    @ElementCollection
+    private Set<String> usuariosLiked = new HashSet<>();
 	
 	public Video() {
 	}
@@ -83,8 +85,16 @@ public class Video {
 	public void setLikes(long likes) {
 		this.likes = likes;
 	}
-	
-	/**
+
+    public Set<String> getUsuariosLiked() {
+        return usuariosLiked;
+    }
+
+    public void setUsuariosLiked(Set<String> usuariosLiked) {
+        this.usuariosLiked = usuariosLiked;
+    }
+
+    /**
 	 * Two Videos will generate the same hashcode if they have exactly the same
 	 * values for their name, url, and duration.
 	 * 
