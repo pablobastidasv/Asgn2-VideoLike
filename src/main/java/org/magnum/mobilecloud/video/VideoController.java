@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 
 import static org.magnum.mobilecloud.video.client.VideoSvcApi.VIDEO_SVC_PATH;
@@ -90,6 +91,20 @@ public class VideoController {
         video.setLikes(video.getLikes() - 1);
 
         videoRepo.save(video);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = VIDEO_SVC_PATH + "/{id}/likedby")
+    public @ResponseBody Collection<String> getUsersWhoLikedVideo(@PathVariable(value = "id") long id,
+                                                     Principal principal,
+                                                     HttpServletResponse response){
+        Video video = videoRepo.findOne(id);
+
+        if(video == null){
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return null;
+        }
+
+        return video.getUsuariosLiked();
     }
 
 }
