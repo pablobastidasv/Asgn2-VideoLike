@@ -12,9 +12,7 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 
-import static org.magnum.mobilecloud.video.client.VideoSvcApi.TITLE_PARAMETER;
-import static org.magnum.mobilecloud.video.client.VideoSvcApi.VIDEO_TITLE_SEARCH_PATH;
-import static org.magnum.mobilecloud.video.client.VideoSvcApi.VIDEO_SVC_PATH;
+import static org.magnum.mobilecloud.video.client.VideoSvcApi.*;
 
 /**
  * Created by pbastidas on 9/14/14.
@@ -111,6 +109,11 @@ public class VideoController {
     @RequestMapping(method = RequestMethod.GET, value = VIDEO_TITLE_SEARCH_PATH)
     public @ResponseBody Collection<Video> findByTitle( @RequestParam(value = TITLE_PARAMETER) String title){
         return videoRepo.findByName(title);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = VIDEO_DURATION_SEARCH_PATH)
+    public @ResponseBody Collection<Video> findByDurationLessThan( @RequestParam(value = DURATION_PARAMETER) long duration){
+        return videoRepo.findByDurationLessThan(duration);
     }
 
 }
