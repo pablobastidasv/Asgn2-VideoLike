@@ -69,4 +69,27 @@ public class VideoController {
         videoRepo.save(video);
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = VIDEO_SVC_PATH + "/{id}/unlike")
+    public void unlikeVideo(@PathVariable(value = "id") long videoId,
+                                         Principal principal,
+                                         HttpServletResponse response){
+        Video video = videoRepo.findOne(videoId);
+
+        if(video == null){
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        String usuario = principal.getName();
+
+        if(!video.getUsuariosLiked().remove(usuario)){
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+
+        video.setLikes(video.getLikes() - 1);
+
+        videoRepo.save(video);
+    }
+
 }
