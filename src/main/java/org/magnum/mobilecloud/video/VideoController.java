@@ -12,6 +12,8 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 
+import static org.magnum.mobilecloud.video.client.VideoSvcApi.TITLE_PARAMETER;
+import static org.magnum.mobilecloud.video.client.VideoSvcApi.VIDEO_TITLE_SEARCH_PATH;
 import static org.magnum.mobilecloud.video.client.VideoSvcApi.VIDEO_SVC_PATH;
 
 /**
@@ -95,7 +97,6 @@ public class VideoController {
 
     @RequestMapping(method = RequestMethod.GET, value = VIDEO_SVC_PATH + "/{id}/likedby")
     public @ResponseBody Collection<String> getUsersWhoLikedVideo(@PathVariable(value = "id") long id,
-                                                     Principal principal,
                                                      HttpServletResponse response){
         Video video = videoRepo.findOne(id);
 
@@ -105,6 +106,11 @@ public class VideoController {
         }
 
         return video.getUsuariosLiked();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = VIDEO_TITLE_SEARCH_PATH)
+    public @ResponseBody Collection<Video> findByTitle( @RequestParam(value = TITLE_PARAMETER) String title){
+        return videoRepo.findByName(title);
     }
 
 }
